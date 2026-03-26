@@ -1,0 +1,35 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: AUTH-SERVICE   # 🔥 IMPORTANT (uppercase for Feign)
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_db
+    username: root
+    password: Shivraj@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# 🔐 JWT CONFIG
+jwt:
+  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+  expiration: 86400000
+
+# 🔥 EUREKA CONFIG (MISSING BEFORE)
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+  client:
+    registry-fetch-interval-seconds: 10
