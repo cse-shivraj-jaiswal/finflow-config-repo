@@ -1,0 +1,99 @@
+spring:
+  cloud:
+    gateway:
+
+      routes:
+
+        # 🔐 AUTH SERVICE
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/(?<segment>.*), /${segment}
+
+        # 📄 APPLICATION SERVICE
+        - id: application-service
+          uri: lb://application-service
+          predicates:
+            - Path=/applications/**
+          filters:
+            - RewritePath=/applications/(?<segment>.*), /${segment}
+
+        # 📁 DOCUMENT SERVICE
+        - id: document-service
+          uri: lb://document-service
+          predicates:
+            - Path=/documents/**
+          filters:
+            - RewritePath=/documents/(?<segment>.*), /${segment}
+
+        # 🧑‍💼 ADMIN SERVICE
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+          filters:
+            - RewritePath=/admin/(?<segment>.*), /${segment}
+
+      # 🌍 GLOBAL CORS
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+
+    discovery:
+      locator:
+        enabled: true
+        lower-case-service-id: true
+
+# 🔥 Eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 10
+
+# 🔥 Swagger Aggregation
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: auth-service
+        url: /auth/v3/api-docs
+      - name: application-service
+        url: /applications/v3/api-docs
+      - name: document-service
+        url: /documents/v3/api-docs
+      - name: admin-service
+        url: /admin/v3/api-docs
+
+# 🔥 Logging
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
+
+# 🔥 Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# 🔐 JWT (for later use)
+jwt:
+  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+  expiration: 86400000
