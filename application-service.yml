@@ -1,0 +1,35 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: APPLICATION-SERVICE   # 🔥 IMPORTANT
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/application_db
+    username: root
+    password: Shivraj@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# 🔐 JWT
+jwt:
+  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+  expiration: 86400000
+
+# 🔥 EUREKA (ADD THIS)
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+  client:
+    registry-fetch-interval-seconds: 10
