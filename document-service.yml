@@ -1,0 +1,44 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: DOCUMENT-SERVICE   # 🔥 IMPORTANT (for Feign + Eureka)
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/document_db
+    username: root
+    password: Shivraj@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# 🔐 JWT CONFIG
+jwt:
+  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+  expiration: 86400000
+
+# 📁 FILE STORAGE
+file:
+  upload-dir: uploads/
+
+# 🔥 EUREKA CONFIG (MISSING BEFORE)
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+  client:
+    registry-fetch-interval-seconds: 10
