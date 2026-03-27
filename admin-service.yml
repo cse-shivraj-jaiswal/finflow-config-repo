@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: admin-service   # 🔥 IMPORTANT (uppercase)
+    name: ADMIN-SERVICE   # 🔥 IMPORTANT (uppercase)
 
   datasource:
     url: jdbc:mysql://localhost:3306/admin_db
