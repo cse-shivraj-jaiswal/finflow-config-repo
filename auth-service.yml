@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: auth-service   # 🔥 IMPORTANT (uppercase for Feign)
+    name: AUTH-SERVICE   # 🔥 IMPORTANT (uppercase for Feign)
 
   datasource:
     url: jdbc:mysql://localhost:3306/auth_db
