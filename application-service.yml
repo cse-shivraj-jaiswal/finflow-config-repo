@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: application-service   # 🔥 IMPORTANT
+    name: APPLICATION-SERVICE   # 🔥 IMPORTANT
 
   datasource:
     url: jdbc:mysql://localhost:3306/application_db
