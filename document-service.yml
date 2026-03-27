@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: document-service   # 🔥 IMPORTANT (for Feign + Eureka)
+    name: DOCUMENT-SERVICE   # 🔥 IMPORTANT (for Feign + Eureka)
 
   datasource:
     url: jdbc:mysql://localhost:3306/document_db
