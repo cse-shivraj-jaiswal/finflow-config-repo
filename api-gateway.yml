@@ -1,4 +1,10 @@
+server:
+  port: 8080
+
 spring:
+  application:
+    name: API-GATEWAY
+
   cloud:
     gateway:
 
@@ -6,7 +12,7 @@ spring:
 
         # 🔐 AUTH SERVICE
         - id: auth-service
-          uri: lb://auth-service
+          uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
           filters:
@@ -14,7 +20,7 @@ spring:
 
         # 📄 APPLICATION SERVICE
         - id: application-service
-          uri: lb://application-service
+          uri: lb://APPLICATION-SERVICE
           predicates:
             - Path=/applications/**
           filters:
@@ -22,7 +28,7 @@ spring:
 
         # 📁 DOCUMENT SERVICE
         - id: document-service
-          uri: lb://document-service
+          uri: lb://DOCUMENT-SERVICE
           predicates:
             - Path=/documents/**
           filters:
@@ -30,7 +36,7 @@ spring:
 
         # 🧑‍💼 ADMIN SERVICE
         - id: admin-service
-          uri: lb://admin-service
+          uri: lb://ADMIN-SERVICE
           predicates:
             - Path=/admin/**
           filters:
@@ -51,9 +57,9 @@ spring:
     discovery:
       locator:
         enabled: false
-        lower-case-service-id: true
+        lower-case-service-id: false   # ✅ IMPORTANT FIX
 
-# 🔥 Eureka
+# 🔥 EUREKA CONFIG
 eureka:
   instance:
     prefer-ip-address: true
@@ -66,34 +72,34 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     registry-fetch-interval-seconds: 10
 
-# 🔥 Swagger Aggregation
+# 🔥 SWAGGER AGGREGATION
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
     urls:
-      - name: auth-service
+      - name: AUTH-SERVICE
         url: /auth/v3/api-docs
-      - name: application-service
+      - name: APPLICATION-SERVICE
         url: /applications/v3/api-docs
-      - name: document-service
+      - name: DOCUMENT-SERVICE
         url: /documents/v3/api-docs
-      - name: admin-service
+      - name: ADMIN-SERVICE
         url: /admin/v3/api-docs
 
-# 🔥 Logging
+# 🔥 LOGGING
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty.http.client: DEBUG
 
-# 🔥 Actuator
+# 🔥 ACTUATOR
 management:
   endpoints:
     web:
       exposure:
         include: "*"
 
-# 🔐 JWT (for later use)
+# 🔐 JWT (FUTURE USE)
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
   expiration: 86400000
