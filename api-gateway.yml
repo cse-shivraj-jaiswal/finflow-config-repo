@@ -6,18 +6,16 @@ spring:
     name: API-GATEWAY
 
   rabbitmq:
-    host: rabbitmq
+    host: localhost
     port: 5672
     username: guest
     password: guest
-
-  zipkin:
-    base-url: http://zipkin:9411
 
   cloud:
     gateway:
       routes:
 
+        # 🔐 AUTH SERVICE
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
@@ -25,6 +23,7 @@ spring:
           filters:
             - RewritePath=/auth/(?<segment>.*), /${segment}
 
+        # 📄 APPLICATION SERVICE
         - id: application-service
           uri: lb://APPLICATION-SERVICE
           predicates:
@@ -32,6 +31,7 @@ spring:
           filters:
             - RewritePath=/applications/(?<segment>.*), /${segment}
 
+        # 📁 DOCUMENT SERVICE
         - id: document-service
           uri: lb://DOCUMENT-SERVICE
           predicates:
@@ -39,6 +39,7 @@ spring:
           filters:
             - RewritePath=/documents/(?<segment>.*), /${segment}
 
+        # 🧑‍💼 ADMIN SERVICE
         - id: admin-service
           uri: lb://ADMIN-SERVICE
           predicates:
@@ -46,6 +47,7 @@ spring:
           filters:
             - RewritePath=/admin/(?<segment>.*), /${segment}
 
+      # 🌍 GLOBAL CORS
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -59,30 +61,52 @@ spring:
 
     discovery:
       locator:
-        enabled: false
+        enabled: false   # keep false since you're manually defining routes
 
+# 🔬 Zipkin Tracing (LATEST FORMAT ✅)
 management:
   tracing:
     sampling:
       probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health,info,metrics
 
+# 🌍 EUREKA
 eureka:
   instance:
     prefer-ip-address: true
-    hostname: api-gateway
+    hostname: localhost
 
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG
-
+# 📄 SWAGGER AGGREGATION
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+    urls:
+      - name: AUTH-SERVICE
+        url: /auth/v3/api-docs
+      - name: APPLICATION-SERVICE
+        url: /applications/v3/api-docs
+      - name: DOCUMENT-SERVICE
+        url: /documents/v3/api-docs
+      - name: ADMIN-SERVICE
+        url: /admin/v3/api-docs
 
+# 🔥 LOGGING
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    io.micrometer: DEBUG
+
+# 🔐 JWT
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
   expiration: 86400000
