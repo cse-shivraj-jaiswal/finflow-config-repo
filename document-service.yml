@@ -1,4 +1,3 @@
-# 📄 DOCUMENT-SERVICE.yml
 server:
   port: 8083
 
@@ -6,24 +5,31 @@ spring:
   application:
     name: DOCUMENT-SERVICE
 
-  # 🐇 RabbitMQ
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
   datasource:
     url: jdbc:mysql://localhost:3306/document_db
     username: root
     password: Shivraj@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
 
-# 🔬 Zipkin Tracing
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# 🔬 Zipkin Tracing (LATEST FORMAT ✅)
 management:
   tracing:
     sampling:
@@ -32,9 +38,21 @@ management:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
 
+# 📁 FILE STORAGE (LOCAL SAFE PATH)
 file:
   upload-dir: uploads/
 
+# 🔐 JWT
+jwt:
+  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+  expiration: 86400000
+
+# 🌍 EUREKA
 eureka:
   instance:
     prefer-ip-address: true
+    hostname: localhost
+
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
