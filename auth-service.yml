@@ -6,9 +6,9 @@ spring:
     name: AUTH-SERVICE
 
   datasource:
-    url: jdbc:mysql://mysql:3306/auth_db
+    url: jdbc:mysql://localhost:3306/auth_db
     username: root
-    password: root
+    password: Shivraj@123
 
   jpa:
     hibernate:
@@ -19,13 +19,13 @@ spring:
         format_sql: true
 
   rabbitmq:
-    host: rabbitmq
+    host: localhost
     port: 5672
     username: guest
     password: guest
 
   zipkin:
-    base-url: http://zipkin:9411
+    base-url: http://localhost:9411
 
 management:
   tracing:
@@ -39,8 +39,8 @@ jwt:
 eureka:
   instance:
     prefer-ip-address: true
-    hostname: auth-service
+    hostname: localhost
 
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
