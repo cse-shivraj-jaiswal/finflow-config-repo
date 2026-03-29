@@ -1,3 +1,4 @@
+# 🚀 API GATEWAY CONFIGURATION (GITHUB VERSION)
 server:
   port: 8080
 
@@ -47,23 +48,19 @@ spring:
           filters:
             - RewritePath=/admin/(?<segment>.*), /${segment}
 
-      # 🌍 GLOBAL CORS
+      # 🌍 GLOBAL CORS (Boot 3.x Hyphenated)
       globalcors:
-        corsConfigurations:
+        cors-configurations:
           '[/**]':
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-            allowedHeaders: "*"
+            allowed-origins: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
 
     discovery:
       locator:
-        enabled: false   # keep false since you're manually defining routes
+        enabled: false
 
-# 🔬 Zipkin Tracing (LATEST FORMAT ✅)
+# 🔬 Zipkin Tracing
 management:
   tracing:
     sampling:
@@ -81,7 +78,6 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: localhost
-
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
