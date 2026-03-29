@@ -1,5 +1,7 @@
 server:
   port: 8081
+  # 🔥 This tells the service to use the Gateway's host/port in Swagger
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -24,13 +26,26 @@ spring:
     username: guest
     password: guest
 
-  zipkin:
-    base-url: http://localhost:9411
-
+# 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
 management:
   tracing:
     sampling:
       probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# 📄 Swagger Optimization
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    # Ensures relative paths are used through the gateway
+    use-root-path: true
 
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
@@ -40,7 +55,6 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: localhost
-
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
