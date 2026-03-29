@@ -45,23 +45,23 @@ spring:
 
 # 📄 SWAGGER AGGREGATION
 # 📄 SWAGGER AGGREGATION
+# 📄 SWAGGER AGGREGATION
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-    # 🔥 This line ensures AUTH-SERVICE is selected by default
-    primary-name: 🔐 AUTH-SERVICE
+    primary-name: auth-service
+    # 🔥 Change this to false to fix the messy text on the right
+    display-operation-id: false
     operations-sorter: alpha
     urls:
-      - name: 🔐 AUTH-SERVICE
+      - name: auth-service
         url: /auth/v3/api-docs
-      - name: 📂 APPLICATION-SERVICE
+      - name: application-service
         url: /applications/v3/api-docs
-      - name: 📄 DOCUMENT-SERVICE
+      - name: document-service
         url: /documents/v3/api-docs
-      - name: 🧑‍💼 ADMIN-SERVICE
+      - name: admin-service
         url: /admin/v3/api-docs
-
-
 
 
 # 🔬 Zipkin & Management
