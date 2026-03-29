@@ -1,4 +1,3 @@
-# 🚀 API GATEWAY CONFIGURATION (GITHUB VERSION)
 server:
   port: 8080
 
@@ -6,49 +5,37 @@ spring:
   application:
     name: API-GATEWAY
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
   cloud:
     gateway:
       routes:
-
-        # 🔐 AUTH SERVICE
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
           filters:
-            - RewritePath=/auth/(?<segment>.*), /${segment}
+            - RewritePath=/auth/(?<sub>.*), /${sub}
 
-        # 📄 APPLICATION SERVICE
         - id: application-service
           uri: lb://APPLICATION-SERVICE
           predicates:
             - Path=/applications/**
           filters:
-            - RewritePath=/applications/(?<segment>.*), /${segment}
+            - RewritePath=/applications/(?<sub>.*), /${sub}
 
-        # 📁 DOCUMENT SERVICE
         - id: document-service
           uri: lb://DOCUMENT-SERVICE
           predicates:
             - Path=/documents/**
           filters:
-            - RewritePath=/documents/(?<segment>.*), /${segment}
+            - RewritePath=/documents/(?<sub>.*), /${sub}
 
-        # 🧑‍💼 ADMIN SERVICE
         - id: admin-service
           uri: lb://ADMIN-SERVICE
           predicates:
             - Path=/admin/**
           filters:
-            - RewritePath=/admin/(?<segment>.*), /${segment}
+            - RewritePath=/admin/(?<sub>.*), /${sub}
 
-      # 🌍 GLOBAL CORS (Boot 3.x Hyphenated)
       globalcors:
         cors-configurations:
           '[/**]':
@@ -56,11 +43,21 @@ spring:
             allowed-methods: "*"
             allowed-headers: "*"
 
-    discovery:
-      locator:
-        enabled: false
+# 📄 SWAGGER AGGREGATION (OPTIMIZED ✅)
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: 🔐 AUTH-SERVICE
+        url: /auth/v3/api-docs
+      - name: 📂 APPLICATION-SERVICE
+        url: /applications/v3/api-docs
+      - name: 📄 DOCUMENT-SERVICE
+        url: /documents/v3/api-docs
+      - name: 🧑‍💼 ADMIN-SERVICE
+        url: /admin/v3/api-docs
 
-# 🔬 Zipkin Tracing
+# 🔬 Zipkin & Management
 management:
   tracing:
     sampling:
@@ -73,36 +70,10 @@ management:
       exposure:
         include: gateway,health,info,metrics
 
-# 🌍 EUREKA
 eureka:
-  instance:
-    prefer-ip-address: true
-    hostname: localhost
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-# 📄 SWAGGER AGGREGATION
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    urls:
-      - name: AUTH-SERVICE
-        url: /auth/v3/api-docs
-      - name: APPLICATION-SERVICE
-        url: /applications/v3/api-docs
-      - name: DOCUMENT-SERVICE
-        url: /documents/v3/api-docs
-      - name: ADMIN-SERVICE
-        url: /admin/v3/api-docs
-
-# 🔥 LOGGING
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG
-    io.micrometer: DEBUG
-
-# 🔐 JWT
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
-  expiration: 86400000
