@@ -8,6 +8,7 @@ spring:
   cloud:
     gateway:
       routes:
+        # 🔐 AUTH SERVICE
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
@@ -15,6 +16,7 @@ spring:
           filters:
             - RewritePath=/auth/(?<sub>.*), /${sub}
 
+        # 📄 APPLICATION SERVICE
         - id: application-service
           uri: lb://APPLICATION-SERVICE
           predicates:
@@ -22,6 +24,7 @@ spring:
           filters:
             - RewritePath=/applications/(?<sub>.*), /${sub}
 
+        # 📂 DOCUMENT SERVICE
         - id: document-service
           uri: lb://DOCUMENT-SERVICE
           predicates:
@@ -29,6 +32,7 @@ spring:
           filters:
             - RewritePath=/documents/(?<sub>.*), /${sub}
 
+        # 🧑‍💼 ADMIN SERVICE
         - id: admin-service
           uri: lb://ADMIN-SERVICE
           predicates:
@@ -36,6 +40,7 @@ spring:
           filters:
             - RewritePath=/admin/(?<sub>.*), /${sub}
 
+      # 🌍 GLOBAL CORS (Spring Boot 3.x Hyphenated)
       globalcors:
         cors-configurations:
           '[/**]':
@@ -43,14 +48,12 @@ spring:
             allowed-methods: "*"
             allowed-headers: "*"
 
-# 📄 SWAGGER AGGREGATION
-# 📄 SWAGGER AGGREGATION
-# 📄 SWAGGER AGGREGATION
+# 📄 SWAGGER AGGREGATION (OPTIMIZED ✅)
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+    # This matches the first URL exactly to set it as default
     primary-name: auth-service
-    # 🔥 Change this to false to fix the messy text on the right
     display-operation-id: false
     operations-sorter: alpha
     urls:
@@ -63,8 +66,7 @@ springdoc:
       - name: admin-service
         url: /admin/v3/api-docs
 
-
-# 🔬 Zipkin & Management
+# 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
 management:
   tracing:
     sampling:
@@ -77,11 +79,16 @@ management:
       exposure:
         include: gateway,health,info,metrics
 
+# 🌍 EUREKA
 eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+# 🔐 JWT
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
   expiration: 86400000
