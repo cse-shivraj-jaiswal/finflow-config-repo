@@ -3,33 +3,41 @@ server:
 
 spring:
   application:
-    name: ADMIN-SERVICE   # 🔥 IMPORTANT (uppercase)
+    name: ADMIN-SERVICE
 
   datasource:
-    url: jdbc:mysql://localhost:3306/admin_db
+    url: jdbc:mysql://mysql:3306/admin_db
     username: root
-    password: Shivraj@123
+    password: root
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
 
-# 🔐 JWT
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+  zipkin:
+    base-url: http://zipkin:9411
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
   expiration: 86400000
 
-# 🔥 EUREKA (ADD THIS)
 eureka:
   instance:
     prefer-ip-address: true
-    hostname: localhost
-    lease-renewal-interval-in-seconds: 10
-    lease-expiration-duration-in-seconds: 30
+    hostname: admin-service
 
   client:
-    registry-fetch-interval-seconds: 10
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
