@@ -43,10 +43,13 @@ spring:
             allowed-methods: "*"
             allowed-headers: "*"
 
-# 📄 SWAGGER AGGREGATION (OPTIMIZED ✅)
+# 📄 SWAGGER AGGREGATION
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+    # 🔥 This line ensures AUTH-SERVICE is selected by default
+    primary-name: 🔐 AUTH-SERVICE
+    operations-sorter: alpha
     urls:
       - name: 🔐 AUTH-SERVICE
         url: /auth/v3/api-docs
@@ -56,6 +59,7 @@ springdoc:
         url: /documents/v3/api-docs
       - name: 🧑‍💼 ADMIN-SERVICE
         url: /admin/v3/api-docs
+
 
 # 🔬 Zipkin & Management
 management:
