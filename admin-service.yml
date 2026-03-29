@@ -1,5 +1,7 @@
 server:
   port: 8084
+  # 🔥 Crucial for Swagger testing through the API Gateway (8080)
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -24,11 +26,7 @@ spring:
     username: guest
     password: guest
 
-jwt:
-  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
-  expiration: 86400000
-
-# 🔬 Zipkin Tracing 
+# 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
 management:
   tracing:
     sampling:
@@ -36,12 +34,26 @@ management:
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# 📄 Swagger Optimization
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    use-root-path: true
+
+jwt:
+  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+  expiration: 86400000
 
 eureka:
   instance:
     prefer-ip-address: true
     hostname: localhost
-
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
