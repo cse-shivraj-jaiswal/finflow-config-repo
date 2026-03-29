@@ -48,19 +48,19 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-    # 🔥 This MUST match the 'name' below exactly
-    primary-name: auth-service
-    display-operation-id: true
+    # 🔥 This line ensures AUTH-SERVICE is selected by default
+    primary-name: 🔐 AUTH-SERVICE
     operations-sorter: alpha
     urls:
-      - name: auth-service
+      - name: 🔐 AUTH-SERVICE
         url: /auth/v3/api-docs
-      - name: application-service
+      - name: 📂 APPLICATION-SERVICE
         url: /applications/v3/api-docs
-      - name: document-service
+      - name: 📄 DOCUMENT-SERVICE
         url: /documents/v3/api-docs
-      - name: admin-service
+      - name: 🧑‍💼 ADMIN-SERVICE
         url: /admin/v3/api-docs
+
 
 
 
