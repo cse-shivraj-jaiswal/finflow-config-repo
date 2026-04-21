@@ -8,31 +8,61 @@ spring:
   cloud:
     gateway:
       routes:
-        # 🔐 AUTH SERVICE
+        # ==========================================
+        # 📄 SWAGGER INTERCEPTOR ROUTES 
+        # ==========================================
+        - id: auth-swagger
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/v3/api-docs/**
+          filters:
+            - RewritePath=/auth/(?<segment>.*), /$\{segment}
+
+        - id: application-swagger
+          uri: lb://APPLICATION-SERVICE
+          predicates:
+            - Path=/applications/v3/api-docs/**
+          filters:
+            - RewritePath=/applications/(?<segment>.*), /$\{segment}
+
+        - id: document-swagger
+          uri: lb://DOCUMENT-SERVICE
+          predicates:
+            - Path=/documents/v3/api-docs/**
+          filters:
+            - RewritePath=/documents/(?<segment>.*), /$\{segment}
+
+        - id: admin-swagger
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/admin/v3/api-docs/**
+          filters:
+            - RewritePath=/admin/(?<segment>.*), /$\{segment}
+
+        # ==========================================
+        # 🔐 STANDARD BUSINESS ROUTES 
+        # ==========================================
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
 
-        # 📄 APPLICATION SERVICE
         - id: application-service
           uri: lb://APPLICATION-SERVICE
           predicates:
             - Path=/applications/**
 
-        # 📂 DOCUMENT SERVICE
         - id: document-service
           uri: lb://DOCUMENT-SERVICE
           predicates:
             - Path=/documents/**
 
-        # 🧑‍💼 ADMIN SERVICE
         - id: admin-service
           uri: lb://ADMIN-SERVICE
           predicates:
             - Path=/admin/**
 
-      # 🌍 GLOBAL CORS (Spring Boot 3.x Hyphenated)
+      # 🌍 GLOBAL CORS
       globalcors:
         cors-configurations:
           '[/**]':
@@ -40,11 +70,10 @@ spring:
             allowed-methods: "*"
             allowed-headers: "*"
 
-# 📄 SWAGGER AGGREGATION (OPTIMIZED ✅)
+# 📄 SWAGGER AGGREGATION
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-    # This matches the first URL exactly to set it as default
     primary-name: auth-service
     display-operation-id: false
     operations-sorter: alpha
@@ -58,7 +87,7 @@ springdoc:
       - name: admin-service
         url: /admin/v3/api-docs
 
-# 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
+# 🔬 Monitoring
 management:
   tracing:
     sampling:
