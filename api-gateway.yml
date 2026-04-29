@@ -1,3 +1,137 @@
+# server:
+#   port: 8080
+
+# spring:
+#   application:
+#     name: API-GATEWAY
+
+#   cloud:
+#     gateway:
+#       routes:
+
+#         # ==========================================
+#         # 📄 SWAGGER INTERCEPTOR ROUTES 
+#         # ==========================================
+#         - id: auth-swagger
+#           uri: lb://AUTH-SERVICE
+#           predicates:
+#             - Path=/auth/v3/api-docs/**
+#           filters:
+#             - RewritePath=/auth/(?<segment>.*), /${segment}
+
+#         - id: application-swagger
+#           uri: lb://APPLICATION-SERVICE
+#           predicates:
+#             - Path=/applications/v3/api-docs/**
+#           filters:
+#             - RewritePath=/applications/(?<segment>.*), /${segment}
+
+#         - id: document-swagger
+#           uri: lb://DOCUMENT-SERVICE
+#           predicates:
+#             - Path=/documents/v3/api-docs/**
+#           filters:
+#             - RewritePath=/documents/(?<segment>.*), /${segment}
+
+#         - id: admin-swagger
+#           uri: lb://ADMIN-SERVICE
+#           predicates:
+#             - Path=/admin/v3/api-docs/**
+#           filters:
+#             - RewritePath=/admin/(?<segment>.*), /${segment}
+
+#         # ==========================================
+#         # 🔐 STANDARD BUSINESS ROUTES 
+#         # ==========================================
+#         - id: auth-service
+#           uri: lb://AUTH-SERVICE
+#           predicates:
+#             - Path=/auth/**
+#           filters:
+#             - StripPrefix=1   # 🔥 FIX
+
+#         - id: application-service
+#           uri: lb://APPLICATION-SERVICE
+#           predicates:
+#             - Path=/applications/**
+#           filters:
+#             - StripPrefix=1   # 🔥 FIX
+
+#         - id: document-service
+#           uri: lb://DOCUMENT-SERVICE
+#           predicates:
+#             - Path=/documents/**
+#           filters:
+#             - StripPrefix=1   # 🔥 FIX
+
+#         - id: admin-service
+#           uri: lb://ADMIN-SERVICE
+#           predicates:
+#             - Path=/admin/**
+#           filters:
+#             - StripPrefix=1   # 🔥 FIX
+
+#       # 🌍 GLOBAL CORS
+#       globalcors:
+#         cors-configurations:
+#           '[/**]':
+#             allowed-origins: "*"
+#             allowed-methods: "*"
+#             allowed-headers: "*"
+
+# # ==========================================
+# # 📄 SWAGGER AGGREGATION
+# # ==========================================
+# springdoc:
+#   swagger-ui:
+#     path: /swagger-ui.html
+#     primary-name: auth-service
+#     display-operation-id: false
+#     operations-sorter: alpha
+#     urls:
+#       - name: auth-service
+#         url: /auth/v3/api-docs
+#       - name: application-service
+#         url: /applications/v3/api-docs
+#       - name: document-service
+#         url: /documents/v3/api-docs
+#       - name: admin-service
+#         url: /admin/v3/api-docs
+
+# # ==========================================
+# # 🔬 MONITORING
+# # ==========================================
+# management:
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#   zipkin:
+#     tracing:
+#       endpoint: http://localhost:9411/api/v2/spans
+#   endpoints:
+#     web:
+#       exposure:
+#         include: gateway,health,info,metrics
+
+# # ==========================================
+# # 🌍 EUREKA
+# # ==========================================
+# eureka:
+#   instance:
+#     prefer-ip-address: true
+#     hostname: localhost
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+
+# # ==========================================
+# # 🔐 JWT
+# # ==========================================
+# jwt:
+#   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+#   expiration: 86400000
+
+
 server:
   port: 8080
 
@@ -41,35 +175,27 @@ spring:
             - RewritePath=/admin/(?<segment>.*), /${segment}
 
         # ==========================================
-        # 🔐 STANDARD BUSINESS ROUTES 
+        # 🔐 STANDARD BUSINESS ROUTES (Prefix Preserved)
         # ==========================================
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
-          filters:
-            - StripPrefix=1   # 🔥 FIX
 
         - id: application-service
           uri: lb://APPLICATION-SERVICE
           predicates:
             - Path=/applications/**
-          filters:
-            - StripPrefix=1   # 🔥 FIX
 
         - id: document-service
           uri: lb://DOCUMENT-SERVICE
           predicates:
             - Path=/documents/**
-          filters:
-            - StripPrefix=1   # 🔥 FIX
 
         - id: admin-service
           uri: lb://ADMIN-SERVICE
           predicates:
             - Path=/admin/**
-          filters:
-            - StripPrefix=1   # 🔥 FIX
 
       # 🌍 GLOBAL CORS
       globalcors:
@@ -87,7 +213,6 @@ springdoc:
     path: /swagger-ui.html
     primary-name: auth-service
     display-operation-id: false
-    operations-sorter: alpha
     urls:
       - name: auth-service
         url: /auth/v3/api-docs
@@ -108,14 +233,7 @@ management:
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
-  endpoints:
-    web:
-      exposure:
-        include: gateway,health,info,metrics
 
-# ==========================================
-# 🌍 EUREKA
-# ==========================================
 eureka:
   instance:
     prefer-ip-address: true
@@ -124,9 +242,7 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-# ==========================================
-# 🔐 JWT
-# ==========================================
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
-  expiration: 86400000
+
+
