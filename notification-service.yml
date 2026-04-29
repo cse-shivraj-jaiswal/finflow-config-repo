@@ -60,11 +60,8 @@
 #       defaultZone: http://localhost:8761/eureka/
 
 
-# 📋 NOTIFICATION-SERVICE.yml
 server:
   port: 8085
-  # 🔥 This ensures Swagger uses the Gateway's address (8080) for testing
-  # forward-headers-strategy: framework
 
 spring:
   application:
@@ -77,6 +74,7 @@ spring:
     username: guest
     password: guest
 
+  # 🗄️ Database
   datasource:
     url: jdbc:mysql://localhost:3306/notification_db
     username: root
@@ -87,7 +85,21 @@ spring:
       ddl-auto: update
     show-sql: true
 
-# 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
+  # 📧 Gmail SMTP Config (Safe placeholders)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+# 🔬 Monitoring (Zipkin)
 management:
   tracing:
     sampling:
@@ -107,12 +119,12 @@ springdoc:
   swagger-ui:
     use-root-path: true
 
-# 🔑 JWT (Added for Consistency)
+# 🔑 JWT Security
 jwt:
   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
   expiration: 86400000
 
-# Eureka Client Config
+# 🌍 Eureka Client
 eureka:
   instance:
     prefer-ip-address: true
@@ -120,4 +132,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+# 📧 Business Config
+admin:
+  email: jaisshivraj143@gmail.com
 
