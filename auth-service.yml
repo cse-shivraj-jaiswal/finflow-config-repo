@@ -1,6 +1,68 @@
+# server:
+#   port: 8081
+#   # 🔥 This tells the service to use the Gateway's host/port in Swagger
+#   forward-headers-strategy: framework
+
+# spring:
+#   application:
+#     name: AUTH-SERVICE
+
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/auth_db
+#     username: root
+#     password: Shivraj@123
+
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+#     properties:
+#       hibernate:
+#         format_sql: true
+
+#   rabbitmq:
+#     host: localhost
+#     port: 5672
+#     username: guest
+#     password: guest
+
+# # 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
+# management:
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#   zipkin:
+#     tracing:
+#       endpoint: http://localhost:9411/api/v2/spans
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
+
+# # 📄 Swagger Optimization
+# springdoc:
+#   api-docs:
+#     path: /v3/api-docs
+#   swagger-ui:
+#     # Ensures relative paths are used through the gateway
+#     use-root-path: true
+
+# jwt:
+#   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+#   expiration: 86400000
+
+# eureka:
+#   instance:
+#     prefer-ip-address: true
+#     hostname: localhost
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+
+
+
 server:
   port: 8081
-  # 🔥 This tells the service to use the Gateway's host/port in Swagger
   forward-headers-strategy: framework
 
 spring:
@@ -26,7 +88,16 @@ spring:
     username: guest
     password: guest
 
-# 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
+# 🔥 Admin Configuration
+admin:
+  email: jaisshivraj143@gmail.com
+
+# 🔐 Security Configuration
+jwt:
+  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+  expiration: 86400000
+
+# 🔬 Monitoring
 management:
   tracing:
     sampling:
@@ -39,17 +110,12 @@ management:
       exposure:
         include: "*"
 
-# 📄 Swagger Optimization
+# 📄 Swagger
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
-    # Ensures relative paths are used through the gateway
     use-root-path: true
-
-jwt:
-  secret: finflow_super_secure_jwt_secret_key_2026_project_backend
-  expiration: 86400000
 
 eureka:
   instance:
@@ -58,3 +124,4 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
