@@ -1,8 +1,70 @@
+# # 📋 NOTIFICATION-SERVICE.yml
+# server:
+#   port: 8085
+#   # 🔥 This ensures Swagger uses the Gateway's address (8080) for testing
+#   forward-headers-strategy: framework
+
+# spring:
+#   application:
+#     name: NOTIFICATION-SERVICE
+
+#   # 🐇 RabbitMQ
+#   rabbitmq:
+#     host: localhost
+#     port: 5672
+#     username: guest
+#     password: guest
+
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/notification_db
+#     username: root
+#     password: Shivraj@123
+
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+
+# # 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
+# management:
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#   zipkin:
+#     tracing:
+#       endpoint: http://localhost:9411/api/v2/spans
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
+
+# # 📄 Swagger Optimization
+# springdoc:
+#   api-docs:
+#     path: /v3/api-docs
+#   swagger-ui:
+#     use-root-path: true
+
+# # 🔑 JWT (Added for Consistency)
+# jwt:
+#   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+#   expiration: 86400000
+
+# # Eureka Client Config
+# eureka:
+#   instance:
+#     prefer-ip-address: true
+#     hostname: localhost
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+
+
 # 📋 NOTIFICATION-SERVICE.yml
 server:
   port: 8085
   # 🔥 This ensures Swagger uses the Gateway's address (8080) for testing
-  forward-headers-strategy: framework
+  # forward-headers-strategy: framework
 
 spring:
   application:
@@ -58,3 +120,4 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
