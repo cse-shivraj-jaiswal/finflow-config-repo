@@ -1,7 +1,81 @@
+# server:
+#   port: 8083
+#   # 🔥 Correctly handles Gateway-delegated requests in Swagger
+#   forward-headers-strategy: framework
+
+# spring:
+#   application:
+#     name: DOCUMENT-SERVICE
+
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/document_db
+#     username: root
+#     password: Shivraj@123
+
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+#     properties:
+#       hibernate:
+#         format_sql: true
+
+#   servlet:
+#     multipart:
+#       max-file-size: 10MB
+#       max-request-size: 10MB
+
+#   rabbitmq:
+#     host: localhost
+#     port: 5672
+#     username: guest
+#     password: guest
+
+# # 🔬 Monitoring (Zipkin LATEST FORMAT ✅)
+# management:
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#   zipkin:
+#     tracing:
+#       endpoint: http://localhost:9411/api/v2/spans
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
+
+# # 📄 Swagger Optimization
+# springdoc:
+#   api-docs:
+#     path: /v3/api-docs
+#   swagger-ui:
+#     use-root-path: true
+
+# # 📁 FILE STORAGE (LOCAL SAFE PATH)
+# file:
+#   upload-dir: uploads/
+
+# # 🔐 JWT
+# jwt:
+#   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+#   expiration: 86400000
+
+# # 🌍 EUREKA
+# eureka:
+#   instance:
+#     prefer-ip-address: true
+#     hostname: localhost
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+
+
+
+
 server:
   port: 8083
   # 🔥 Correctly handles Gateway-delegated requests in Swagger
-  forward-headers-strategy: framework
+  # forward-headers-strategy: framework
 
 spring:
   application:
@@ -68,3 +142,4 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
