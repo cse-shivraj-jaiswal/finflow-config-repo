@@ -60,6 +60,86 @@
 #       defaultZone: http://localhost:8761/eureka/
 
 
+# server:
+#   port: 8085
+
+# spring:
+#   application:
+#     name: NOTIFICATION-SERVICE
+
+#   # 🐇 RabbitMQ
+#   rabbitmq:
+#     host: localhost
+#     port: 5672
+#     username: guest
+#     password: guest
+
+#   # 🗄️ Database
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/notification_db
+#     username: root
+#     password: Shivraj@123
+
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+
+#   # 📧 Gmail SMTP Config (Safe placeholders)
+#   mail:
+#     host: smtp.gmail.com
+#     port: 587
+#     username: ${MAIL_USERNAME}
+#     password: ${MAIL_PASSWORD}
+#     properties:
+#       mail:
+#         smtp:
+#           auth: true
+#           starttls:
+#             enable: true
+#             required: true
+
+# # 🔬 Monitoring (Zipkin)
+# management:
+#   tracing:
+#     sampling:
+#       probability: 1.0
+#   zipkin:
+#     tracing:
+#       endpoint: http://localhost:9411/api/v2/spans
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
+
+# # 📄 Swagger Optimization
+# springdoc:
+#   api-docs:
+#     path: /v3/api-docs
+#   swagger-ui:
+#     use-root-path: true
+
+# # 🔑 JWT Security
+# jwt:
+#   secret: finflow_super_secure_jwt_secret_key_2026_project_backend
+#   expiration: 86400000
+
+# # 🌍 Eureka Client
+# eureka:
+#   instance:
+#     prefer-ip-address: true
+#     hostname: localhost
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+
+# # 📧 Business Config
+# admin:
+#   email: jaisshivraj143@gmail.com
+
+
+
+
 server:
   port: 8085
 
@@ -67,23 +147,19 @@ spring:
   application:
     name: NOTIFICATION-SERVICE
 
+  # ❌ No database needed — notification-service only sends emails via RabbitMQ
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+
   # 🐇 RabbitMQ
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
-
-  # 🗄️ Database
-  datasource:
-    url: jdbc:mysql://localhost:3306/notification_db
-    username: root
-    password: Shivraj@123
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
 
   # 📧 Gmail SMTP Config (Safe placeholders)
   mail:
@@ -136,4 +212,5 @@ eureka:
 # 📧 Business Config
 admin:
   email: jaisshivraj143@gmail.com
+
 
